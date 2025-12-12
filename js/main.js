@@ -225,6 +225,9 @@
             targetInput.style.display = 'block';
         }
         
+        // Dispatch template-switched event to re-attach event listeners
+        window.dispatchEvent(new CustomEvent('template-switched'));
+        
         debouncedGenerate();
     }
     
@@ -1116,21 +1119,34 @@
         }
         
         // Auto-generate on input - only for text inputs and textareas
-        dom.$$('.qr-input').forEach(el => {
-            if (el.tagName === 'INPUT' && el.type !== 'file' || el.tagName === 'TEXTAREA') {
-                // Use input event for real-time updates on text fields
-                addTrackedEventListener(el, 'input', () => {
-                    validateInput(el);
-                    debouncedGenerate();
-                });
-            } else if (el.tagName === 'SELECT' || el.type === 'checkbox') {
-                // Use change event for select dropdowns and checkboxes
-                addTrackedEventListener(el, 'change', () => {
-                    validateInput(el);
-                    debouncedGenerate();
-                });
-            }
-        });
+        const attachInputListeners = () => {
+            dom.$$('.qr-input').forEach(el => {
+                // Skip if already has input listener
+                if (el.dataset.hasInputListener === 'true') return;
+                
+                if ((el.tagName === 'INPUT' && el.type !== 'file') || el.tagName === 'TEXTAREA') {
+                    // Use input event for real-time updates on text fields
+                    addTrackedEventListener(el, 'input', () => {
+                        validateInput(el);
+                        debouncedGenerate();
+                    });
+                    el.dataset.hasInputListener = 'true';
+                } else if (el.tagName === 'SELECT' || el.type === 'checkbox') {
+                    // Use change event for select dropdowns and checkboxes
+                    addTrackedEventListener(el, 'change', () => {
+                        validateInput(el);
+                        debouncedGenerate();
+                    });
+                    el.dataset.hasInputListener = 'true';
+                }
+            });
+        };
+        
+        // Initial attachment
+        attachInputListeners();
+        
+        // Re-attach listeners when templates switch (some inputs may become visible)
+        window.addEventListener('template-switched', attachInputListeners);
     }
     
     // ===== Initialization =====
