@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Privacy-First QR Code Generator | Open Source & Secure</title>
+    <meta name="description" content="Generate QR codes completely in your browser. Privacy-first, open source, no data collection. Supports URLs, WiFi, vCard, events, Bitcoin, and more.">
+    <meta name="keywords" content="QR code generator, privacy, open source, client-side, secure, no tracking">
+    <meta name="author" content="Darkhorse">
+    <link rel="canonical" href="/">
+    
+    <!-- Skip Links for Accessibility -->
+    <style>
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: #000;
+            color: #fff;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+            z-index: 1000;
+            transition: top 0.3s;
+        }
+        .skip-link:focus {
+            top: 6px;
+        }
+    </style>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.hopjs.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-2FMn2Zx6PuH5tdBQDRNwrOo60ts5wWPC9R8jK67b3t4=" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.hopjs.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet" integrity="sha256-pdY4ejLKO67E0CM2tbPtq1DJ3VGDVVdqAR6j3ZwdiE4=" crossorigin="anonymous">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Skip Links for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#controls-panel" class="skip-link">Skip to controls</a>
+    <a href="#qr-container" class="skip-link">Skip to QR preview</a>
+    
+    <div class="container">
+        <div class="main-container">
+            <!-- Header -->
+            <header class="header" role="banner">
+                <div class="theme-toggle-wrapper" style="position: absolute; right: 2rem; top: 50%; transform: translateY(-50%);">
+                    <button id="theme-toggle" class="btn btn-sm btn-outline-light" aria-label="Toggle dark mode" title="Toggle dark mode">
+                        <i class="bi bi-sun-fill" id="theme-icon-light" aria-hidden="true"></i>
+                        <i class="bi bi-moon-fill" id="theme-icon-dark" aria-hidden="true" style="display: none;"></i>
+                    </button>
+                </div>
+                <div style="text-align: center;">
+                    <h1><i class="bi bi-qr-code" aria-hidden="true"></i> Privacy-First QR Code Generator</h1>
+                    <p class="mb-0">Open Source, No Tracking <span class="badge-auto">CLIENT-SIDE</span> <span class="badge-auto" style="background: #5dade2;">PRIVACY-FIRST</span></p>
+                </div>
+            </header>
+            
+            <main id="main-content" class="row g-0">
+                <!-- Controls Panel -->
+                <aside id="controls-panel" class="col-lg-6 p-3" style="background: #fafbfc;" role="complementary" aria-label="QR code configuration controls">
+                    <!-- Templates -->
+                    <section class="control-section" role="region" aria-labelledby="template-heading">
+                        <h6 id="template-heading"><i class="bi bi-grid-3x3-gap" aria-hidden="true"></i> Template</h6>
+                        <div class="row g-2" role="radiogroup" aria-labelledby="template-heading">
+                            <div class="col-4 col-sm-3"><button class="template-btn active" data-template="text" role="radio" aria-checked="true" aria-label="URL/Text template"><i class="bi bi-link-45deg" aria-hidden="true"></i><small>URL/Text</small></button></div>
+                            <div class="col-4 col-sm-3"><button class="template-btn" data-template="wifi" role="radio" aria-checked="false" aria-label="WiFi template"><i class="bi bi-wifi" aria-hidden="true"></i><small>WiFi</small></button></div>
+                            <div class="col-4 col-sm-3"><button class="template-btn" data-template="vcard" role="radio" aria-checked="false" aria-label="vCard template"><i class="bi bi-person-vcard" aria-hidden="true"></i><small>vCard</small></button></div>
+                            <div class="col-4 col-sm-3"><button class="template-btn" data-template="mecard" role="radio" aria-checked="false" aria-label="MeCard template"><i class="bi bi-person-lines-fill" aria-hidden="true"></i><small>MeCard</small></button></div>
+                            <div class="col-4 col-sm-3"><button class="template-btn" data-template="event" role="radio" aria-checked="false" aria-label="Event/Calendar template"><i class="bi bi-calendar-event" aria-hidden="true"></i><small>Event</small></button></div>
+                            <div class="col-4 col-sm-3"><button class="template-btn" data-template="bitcoin" role="radio" aria-checked="false" aria-label="Bitcoin payment template"><i class="bi bi-currency-bitcoin" aria-hidden="true"></i><small>Bitcoin</small></button></div>
+                            <div class="col-4 col-sm-3"><button class="template-btn" data-template="geo" role="radio" aria-checked="false" aria-label="Geo-location template"><i class="bi bi-geo-alt" aria-hidden="true"></i><small>Location</small></button></div>
+                            <div class="col-4 col-sm-3"><button class="template-btn" data-template="social" role="radio" aria-checked="false" aria-label="Social media template"><i class="bi bi-share" aria-hidden="true"></i><small>Social</small></button></div>
+                            <div class="col-4 col-sm-3"><button class="template-btn" data-template="app" role="radio" aria-checked="false" aria-label="App download template"><i class="bi bi-phone" aria-hidden="true"></i><small>App</small></button></div>
+                            <div class="col-4 col-sm-3"><button class="template-btn" data-template="email" role="radio" aria-checked="false" aria-label="Email template"><i class="bi bi-envelope" aria-hidden="true"></i><small>Email</small></button></div>
+                            <div class="col-4 col-sm-3"><button class="template-btn" data-template="sms" role="radio" aria-checked="false" aria-label="SMS template"><i class="bi bi-chat-dots" aria-hidden="true"></i><small>SMS</small></button></div>
+                            <div class="col-4 col-sm-3"><button class="template-btn" data-template="phone" role="radio" aria-checked="false" aria-label="Phone template"><i class="bi bi-telephone" aria-hidden="true"></i><small>Phone</small></button></div>
+                        </div>
+                    </section>
+                    
+                    <!-- Content -->
+                    <section class="control-section" role="region" aria-labelledby="content-heading">
+                        <h6 id="content-heading"><i class="bi bi-pencil" aria-hidden="true"></i> Content</h6>
+                        
+                        <div id="input-text" class="template-input" role="group" aria-labelledby="text-content-label">
+                            <label id="text-content-label" class="visually-hidden" for="text-content">Text or URL content</label>
+                            <textarea class="form-control form-control-sm qr-input" id="text-content" rows="2" placeholder="Enter text or URL..." aria-describedby="text-content-help">https://github.com</textarea>
+                            <div id="text-content-help" class="form-text">Enter any text or URL to encode in the QR code</div>
+                        </div>
+                        
+                        <div id="input-wifi" class="template-input" style="display:none;" role="group" aria-labelledby="wifi-heading">
+                            <h7 id="wifi-heading" class="visually-hidden">WiFi Configuration</h7>
+                            <label for="wifi-ssid" class="form-label small">Network Name (SSID)</label>
+                            <input type="text" class="form-control form-control-sm qr-input mb-2" id="wifi-ssid" placeholder="Network Name (SSID)" value="MyWiFi" aria-describedby="wifi-ssid-help">
+                            <div id="wifi-ssid-help" class="form-text">The name of your WiFi network</div>
+                            
+                            <label for="wifi-password" class="form-label small">Password</label>
+                            <input type="text" class="form-control form-control-sm qr-input mb-2" id="wifi-password" placeholder="Password" aria-describedby="wifi-password-help">
+                            <div id="wifi-password-help" class="form-text">Leave empty for open networks</div>
+                            
+                            <label for="wifi-encryption" class="form-label small">Security Type</label>
+                            <select class="form-select form-select-sm qr-input mb-2" id="wifi-encryption" aria-describedby="wifi-encryption-help">
+                                <option value="WPA">WPA/WPA2</option>
+                                <option value="WEP">WEP</option>
+                                <option value="nopass">Open (No Password)</option>
+                            </select>
+                            <div id="wifi-encryption-help" class="form-text">Select your network's security type</div>
+                            
+                            <div class="form-check">
+                                <input class="form-check-input qr-input" type="checkbox" id="wifi-hidden" aria-describedby="wifi-hidden-help">
+                                <label class="form-check-label small" for="wifi-hidden">Hidden Network</label>
+                                <div id="wifi-hidden-help" class="form-text">Check if your network doesn't broadcast its name</div>
+                            </div>
+                        </div>
+                        
+                        <div id="input-vcard" class="template-input" style="display:none;" role="group" aria-labelledby="vcard-heading">
+                            <h7 id="vcard-heading" class="visually-hidden">Contact Information</h7>
+                            <label for="vcard-name" class="form-label small">Full Name</label>
+                            <input type="text" class="form-control form-control-sm qr-input mb-2" id="vcard-name" placeholder="Full Name" value="John Doe">
+                            
+                            <label for="vcard-org" class="form-label small">Organization</label>
+                            <input type="text" class="form-control form-control-sm qr-input mb-2" id="vcard-org" placeholder="Organization">
+                            
+                            <label for="vcard-title" class="form-label small">Title/Position</label>
+                            <input type="text" class="form-control form-control-sm qr-input mb-2" id="vcard-title" placeholder="Title/Position">
+                            
+                            <label for="vcard-phone" class="form-label small">Phone</label>
+                            <input type="tel" class="form-control form-control-sm qr-input mb-2" id="vcard-phone" placeholder="Phone">
+                            
+                            <label for="vcard-email" class="form-label small">Email</label>
+                            <input type="email" class="form-control form-control-sm qr-input mb-2" id="vcard-email" placeholder="Email">
+                            
+                            <label for="vcard-url" class="form-label small">Website</label>
+                            <input type="url" class="form-control form-control-sm qr-input mb-2" id="vcard-url" placeholder="Website">
+                            
+                            <label for="vcard-address" class="form-label small">Address</label>
+                            <input type="text" class="form-control form-control-sm qr-input" id="vcard-address" placeholder="Address">
+                        </div>
+                        
+                        <div id="input-email" class="template-input" style="display:none;" role="group" aria-labelledby="email-heading">
+                            <h7 id="email-heading" class="visually-hidden">Email Configuration</h7>
+                            <label for="email-to" class="form-label small">To Email</label>
+                            <input type="email" class="form-control form-control-sm qr-input mb-2" id="email-to" placeholder="To Email" value="hello@example.com">
+                            
+                            <label for="email-subject" class="form-label small">Subject</label>
+                            <input type="text" class="form-control form-control-sm qr-input mb-2" id="email-subject" placeholder="Subject">
+                            
+                            <label for="email-body" class="form-label small">Body</label>
+                            <textarea class="form-control form-control-sm qr-input" id="email-body" rows="2" placeholder="Body"></textarea>
+                        </div>
+                        
+                        <div id="input-sms" class="template-input" style="display:none;" role="group" aria-labelledby="sms-heading">
+                            <h7 id="sms-heading" class="visually-hidden">SMS Configuration</h7>
+                            <label for="sms-phone" class="form-label small">Phone Number</label>
+                            <input type="tel" class="form-control form-control-sm qr-input mb-2" id="sms-phone" placeholder="Phone Number" value="+1234567890">
+                            
+                            <label for="sms-message" class="form-label small">Message</label>
+                            <textarea class="form-control form-control-sm qr-input" id="sms-message" rows="2" placeholder="Message"></textarea>
+                        </div>
+                        
+                        <div id="input-phone" class="template-input" style="display:none;" role="group" aria-labelledby="phone-heading">
+                            <h7 id="phone-heading" class="visually-hidden">Phone Number</h7>
+                            <label for="phone-number" class="form-label small">Phone Number</label>
+                            <input type="tel" class="form-control form-control-sm qr-input" id="phone-number" placeholder="Phone Number" value="+1234567890">
+                        </div>
+                        
+                        <div id="input-mecard" class="template-input" style="display:none;" role="group" aria-labelledby="mecard-heading">
+                            <h7 id="mecard-heading" class="visually-hidden">Contact Information (MeCard)</h7>
+                            <label for="mecard-name" class="form-label small">Name</label>
+                            <input type="text" class="form-control form-control-sm qr-input mb-2" id="mecard-name" placeholder="Name" value="John Doe">
+                            
+                            <label for="mecard-phone" class="form-label small">Phone</label>
+                            <input type="tel" class="form-control form-control-sm qr-input mb-2" id="mecard-phone" placeholder="Phone">
+                            
+                            <label for="mecard-email" class="form-label small">Email</label>
+                            <input type="email" class="form-control form-control-sm qr-input mb-2" id="mecard-email" placeholder="Email">
+                            
+                            <label for="mecard-url" class="form-label small">Website</label>
+                            <input type="url" class="form-control form-control-sm qr-input mb-2" id="mecard-url" placeholder="Website">
+                            
+                            <label for="mecard-address" class="form-label small">Address</label>
+                            <input type="text" class="form-control form-control-sm qr-input mb-2" id="mecard-address" placeholder="Address">
+                            
+                            <label for="mecard-birthday" class="form-label small">Birthday</label>
+                            <input type="date" class="form-control form-control-sm qr-input mb-2" id="mecard-birthday" placeholder="Birthday">
+                            
+                            <label for="mecard-note" class="form-label small">Note</label>
+                            <textarea class="form-control form-control-sm qr-input" id="mecard-note" rows="2" placeholder="Note"></textarea>
+                        </div>
+                        
+                        <div id="input-event" class="template-input" style="display:none;" role="group" aria-labelledby="event-heading">
+                            <h7 id="event-heading" class="visually-hidden">Event/Calendar Information</h7>
+                            <label for="event-title" class="form-label small">Event Title</label>
+                            <input type="text" class="form-control form-control-sm qr-input mb-2" id="event-title" placeholder="Event Title" value="My Event">
+                            
+                            <label for="event-start" class="form-label small">Start Date & Time</label>
+                            <input type="datetime-local" class="form-control form-control-sm qr-input mb-2" id="event-start">
+                            
+                            <label for="event-end" class="form-label small">End Date & Time</label>
+                            <input type="datetime-local" class="form-control form-control-sm qr-input mb-2" id="event-end">
+                            
+                            <label for="event-location" class="form-label small">Location</label>
+                            <input type="text" class="form-control form-control-sm qr-input mb-2" id="event-location" placeholder="Event Location">
+                            
+                            <label for="event-description" class="form-label small">Description</label>
+                            <textarea class="form-control form-control-sm qr-input mb-2" id="event-description" rows="2" placeholder="Event Description"></textarea>
+                            
+                            <label for="event-timezone" class="form-label small">Timezone</label>
+                            <select class="form-select form-select-sm qr-input" id="event-timezone">
+                                <option value="UTC">UTC</option>
+                                <option value="America/New_York">Eastern Time</option>
+                                <option value="America/Chicago">Central Time</option>
+                                <option value="America/Denver">Mountain Time</option>
+                                <option value="America/Los_Angeles">Pacific Time</option>
+                                <option value="Europe/London">London</option>
+                                <option value="Europe/Paris">Paris</option>
+                                <option value="Asia/Tokyo">Tokyo</option>
+                            </select>
+                        </div>
+                        
+                        <div id="input-bitcoin" class="template-input" style="display:none;" role="group" aria-labelledby="bitcoin-heading">
+                            <h7 id="bitcoin-heading" class="visually-hidden">Bitcoin Payment Information</h7>
+                            <label for="bitcoin-address" class="form-label small">Bitcoin Address</label>
+                            <input type="text" class="form-control form-control-sm qr-input mb-2" id="bitcoin-address" placeholder="Bitcoin Address">
+                            
+                            <label for="bitcoin-amount" class="form-label small">Amount (BTC)</label>
+                            <input type="number" class="form-control form-control-sm qr-input mb-2" id="bitcoin-amount" placeholder="0.001" step="0.00000001" min="0">
+                            
+                            <label for="bitcoin-label" class="form-label small">Label</label>
+                            <input type="text" class="form-control form-control-sm qr-input mb-2" id="bitcoin-label" placeholder="Payment Label">
+                            
+                            <label for="bitcoin-message" class="form-label small">Message</label>
+                            <textarea class="form-control form-control-sm qr-input" id="bitcoin-message" rows="2" placeholder="Payment Message"></textarea>
+                        </div>
+                        
+                        <div id="input-geo" class="template-input" style="display:none;" role="group" aria-labelledby="geo-heading">
+                            <h7 id="geo-heading" class="visually-hidden">Geographic Location</h7>
+                            <label for="geo-latitude" class="form-label small">Latitude</label>
+                            <input type="number" class="form-control form-control-sm qr-input mb-2" id="geo-latitude" placeholder="40.7128" step="any">
+                            
+                            <label for="geo-longitude" class="form-label small">Longitude</label>
+                            <input type="number" class="form-control form-control-sm qr-input mb-2" id="geo-longitude" placeholder="-74.0060" step="any">
+                            
+                            <label for="geo-altitude" class="form-label small">Altitude (meters)</label>
+                            <input type="number" class="form-control form-control-sm qr-input mb-2" id="geo-altitude" placeholder="Optional" step="1">
+                            
+                            <label for="geo-query" class="form-label small">Location Name/Query</label>
+                            <input type="text" class="form-control form-control-sm qr-input" id="geo-query" placeholder="New York City">
+                        </div>
+                        
+                        <div id="input-social" class="template-input" style="display:none;" role="group" aria-labelledby="social-heading">
+                            <h7 id="social-heading" class="visually-hidden">Social Media Profile</h7>
+                            <label for="social-platform" class="form-label small">Platform</label>
+                            <select class="form-select form-select-sm qr-input mb-2" id="social-platform">
+                                <option value="facebook">Facebook</option>
+                                <option value="twitter">Twitter/X</option>
+                                <option value="instagram">Instagram</option>
+                                <option value="linkedin">LinkedIn</option>
+                                <option value="youtube">YouTube</option>
+                                <option value="tiktok">TikTok</option>
+                                <option value="github">GitHub</option>
+                                <option value="custom">Custom URL</option>
+                            </select>
+                            
+                            <label for="social-username" class="form-label small">Username or URL</label>
+                            <input type="text" class="form-control form-control-sm qr-input mb-2" id="social-username" placeholder="username or full URL">
+                            
+                            <div id="social-preview" class="form-text">Preview: <span id="social-preview-url"></span></div>
+                        </div>
+                        
+                        <div id="input-app" class="template-input" style="display:none;" role="group" aria-labelledby="app-heading">
+                            <h7 id="app-heading" class="visually-hidden">App Download</h7>
+                            <label for="app-platform" class="form-label small">Platform</label>
+                            <select class="form-select form-select-sm qr-input mb-2" id="app-platform">
+                                <option value="ios">iOS App Store</option>
+                                <option value="android">Google Play</option>
+                                <option value="windows">Windows Store</option>
+                                <option value="amazon">Amazon Appstore</option>
+                                <option value="custom">Custom URL</option>
+                            </select>
+                            
+                            <label for="app-id" class="form-label small">App ID or URL</label>
+                            <input type="text" class="form-control form-control-sm qr-input mb-2" id="app-id" placeholder="App ID or full store URL">
+                            
+                            <div id="app-preview" class="form-text">Preview: <span id="app-preview-url"></span></div>
+                        </div>
+                    </section>
+                    
+                    <!-- Design -->
+                    <section class="control-section" role="region" aria-labelledby="design-heading">
+                        <h6 id="design-heading"><i class="bi bi-palette" aria-hidden="true"></i> Design</h6>
+                        
+                        <div class="row g-2 mb-2">
+                            <div class="col-6">
+                                <label for="qr-size" class="form-label small">Size: <strong id="size-display">400</strong>px</label>
+                                <input type="range" class="form-range qr-input" id="qr-size" min="200" max="1000" value="400" step="50" aria-describedby="qr-size-help">
+                                <div id="qr-size-help" class="form-text">Adjust the QR code size (200-1000px)</div>
+                            </div>
+                            <div class="col-6">
+                                <label for="margin-size" class="form-label small">Margin: <strong id="margin-display">2</strong></label>
+                                <input type="range" class="form-range qr-input" id="margin-size" min="0" max="8" value="2" step="1" aria-describedby="margin-size-help">
+                                <div id="margin-size-help" class="form-text">White space around QR code (0-8)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-2 mb-2">
+                            <div class="col-6">
+                                <label for="fg-color" class="form-label small">Foreground Color</label>
+                                <div class="d-flex gap-2 align-items-center">
+                                    <div class="color-preview" id="fg-preview" style="background:#000000;" role="button" tabindex="0" aria-label="Foreground color picker"></div>
+                                    <input type="color" class="qr-input visually-hidden" id="fg-color" value="#000000" aria-describedby="fg-color-help">
+                                    <input type="text" class="form-control form-control-sm qr-input" id="fg-hex" value="#000000" maxlength="7" style="width:80px;" aria-label="Foreground color hex value">
+                                </div>
+                                <div id="fg-color-help" class="form-text">Color of the QR code modules</div>
+                            </div>
+                            <div class="col-6">
+                                <label for="bg-color" class="form-label small">Background Color</label>
+                                <div class="d-flex gap-2 align-items-center">
+                                    <div class="color-preview" id="bg-preview" style="background:#ffffff;" role="button" tabindex="0" aria-label="Background color picker"></div>
+                                    <input type="color" class="qr-input visually-hidden" id="bg-color" value="#ffffff" aria-describedby="bg-color-help">
+                                    <input type="text" class="form-control form-control-sm qr-input" id="bg-hex" value="#ffffff" maxlength="7" style="width:80px;" aria-label="Background color hex value">
+                                </div>
+                                <div id="bg-color-help" class="form-text">Background color behind QR code</div>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <label for="dot-style" class="form-label small">Dot Style</label>
+                                <select class="form-select form-select-sm qr-input" id="dot-style" aria-describedby="dot-style-help">
+                                    <option value="square">Square</option>
+                                    <option value="rounded">Rounded</option>
+                                    <option value="dots">Dots</option>
+                                </select>
+                                <div id="dot-style-help" class="form-text">Shape of the QR code modules</div>
+                            </div>
+                            <div class="col-6">
+                                <label for="error-correction" class="form-label small">Error Correction</label>
+                                <select class="form-select form-select-sm qr-input" id="error-correction" aria-describedby="error-correction-help">
+                                    <option value="L">Low (7%)</option>
+                                    <option value="M" selected>Medium (15%)</option>
+                                    <option value="Q">Quartile (25%)</option>
+                                    <option value="H">High (30%)</option>
+                                </select>
+                                <div id="error-correction-help" class="form-text">Higher levels allow logo embedding</div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Logo -->
+                    <section class="control-section" role="region" aria-labelledby="logo-heading">
+                        <h6 id="logo-heading"><i class="bi bi-image" aria-hidden="true"></i> Logo</h6>
+                        <div class="row g-2 align-items-center">
+                            <div class="col">
+                                <label for="logo-upload" class="form-label small">Upload Logo</label>
+                                <input type="file" class="form-control form-control-sm" id="logo-upload" accept="image/*" aria-describedby="logo-upload-help">
+                                <div id="logo-upload-help" class="form-text">Upload an image to embed in the QR code</div>
+                            </div>
+                            <div class="col-auto" id="logo-preview-wrap" style="display:none;">
+                                <img id="logo-preview" class="logo-preview" alt="Uploaded logo preview">
+                                <button class="btn btn-sm btn-outline-danger ms-1" id="clear-logo" aria-label="Remove uploaded logo"><i class="bi bi-x" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <label for="logo-size" class="form-label small">Logo Size: <strong id="logo-size-display">20</strong>%</label>
+                            <input type="range" class="form-range qr-input" id="logo-size" min="10" max="35" value="20" step="5" aria-describedby="logo-size-help">
+                            <div id="logo-size-help" class="form-text">Size of logo relative to QR code (10-35%)</div>
+                        </div>
+                    </section>
+                    
+                    <!-- Status -->
+                    <div class="status-indicator" id="status" role="status" aria-live="polite" aria-atomic="true"><span id="status-text"></span></div>
+                </aside>
+                
+                <!-- Preview Panel -->
+                <section class="col-lg-6 p-3" role="main" aria-labelledby="preview-heading">
+                    <h2 id="preview-heading" class="visually-hidden">QR Code Preview and Download</h2>
+                    <div class="qr-preview" id="qr-container" role="img" aria-label="QR code preview area">
+                        <div id="qrcode"></div>
+                        <div id="placeholder" class="text-center text-muted">
+                            <i class="bi bi-qr-code" style="font-size:4rem;opacity:0.3;" aria-hidden="true"></i>
+                            <p class="mt-2 mb-0 small">QR code will appear here</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Downloads -->
+                    <div class="mt-3" id="download-section" style="display:none;" role="region" aria-labelledby="download-heading">
+                        <h6 id="download-heading"><i class="bi bi-download" aria-hidden="true"></i> Download</h6>
+                        <div class="row g-2">
+                            <div class="col"><button class="btn btn-outline-primary w-100" style="height: 60px;" id="dl-png" aria-label="Download QR code as PNG image"><i class="bi bi-file-image" aria-hidden="true"></i> PNG</button></div>
+                            <div class="col"><button class="btn btn-outline-primary w-100" style="height: 60px;" id="dl-jpg" aria-label="Download QR code as JPEG image"><i class="bi bi-file-image" aria-hidden="true"></i> JPEG</button></div>
+                            <div class="col"><button class="btn btn-outline-primary w-100" style="height: 60px;" id="dl-svg" aria-label="Download QR code as SVG vector"><i class="bi bi-file-code" aria-hidden="true"></i> SVG</button></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Network Monitor -->
+                    <div class="mt-3" role="region" aria-labelledby="network-heading">
+                        <h6 id="network-heading"><i class="bi bi-broadcast" aria-hidden="true"></i> Network Monitor</h6>
+                        <div class="network-monitor" id="network-monitor" role="log" aria-live="polite" aria-label="Network activity log">
+                            <div class="network-monitor-header">
+                                <span><i class="bi bi-broadcast" aria-hidden="true"></i> Network Monitor <span class="request-count" id="request-count">0 requests</span></span>
+                                <span>
+                                    <span class="no-outbound" id="outbound-status"><i class="bi bi-shield-check" aria-hidden="true"></i> No Outbound</span>
+                                </span>
+                            </div>
+                            <div id="network-log">
+                                <div class="network-entry">
+                                    <span class="method-badge method-get">GET</span>
+                                    <span class="resource-type">init</span>
+                                    <span class="resource-url">Monitoring network requests...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Info -->
+                    <div class="mt-3 p-2 small" style="background: var(--privacy-bg); border-left: 3px solid var(--privacy-border); border-radius: 6px;" role="complementary" aria-labelledby="privacy-heading">
+                        <strong id="privacy-heading" class="text-primary" style="color: var(--privacy-text) !important;"><i class="bi bi-shield-check" aria-hidden="true"></i> Privacy Guaranteed</strong><br>
+                        <span style="color: var(--privacy-muted);">All QR codes generated 100% in your browser. Only CDN resources for libraries are loaded - no data ever leaves your device.</span>
+                    </div>
+                </section>
+            </main>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="text-center mt-4 pb-3" role="contentinfo">
+            <div class="mb-2">
+                <small class="fw-bold" style="color: var(--footer-text);">
+                    <i class="bi bi-heart-fill text-danger" aria-hidden="true"></i> Created out of frustration with commercial QR tools that limit features and harvest your data.
+                </small>
+            </div>
+            <small style="color: var(--footer-text);">Built by <a href="https://github.com/paramedic" target="_blank" rel="noopener noreferrer" class="footer-link">Darkhorse</a> with <a href="https://getbootstrap.com/" target="_blank" rel="noopener noreferrer" class="footer-link">Bootstrap 5</a> & <a href="https://github.com/kazuhikoarase/qrcode-generator" target="_blank" rel="noopener noreferrer" class="footer-link">qrcode-generator</a> & <a href="https://github.com/cure53/DOMPurify" target="_blank" rel="noopener noreferrer" class="footer-link">DOMPurify</a></small>
+            <div class="mt-1">
+                <small style="color: var(--footer-text);">
+                    <i class="bi bi-shield-lock" aria-hidden="true"></i> Privacy Policies:
+                    <a href="privacy-policy.html" class="footer-link">Our Privacy Policy</a>
+                    <span style="color: var(--footer-text);">•</span>
+                    <a href="https://bunny.net/privacy/" target="_blank" rel="noopener noreferrer" class="footer-link">Bunny.net (hop.js)</a>
+                    <span style="color: var(--footer-text);">•</span>
+                    <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub Pages</a>
+                </small>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.hopjs.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha256-5P1JGBOIxI7FBAvT/mb1fCnI5n/NhQKzNUuW7Hq0fMc=" crossorigin="anonymous"></script>
+    <script src="https://cdn.hopjs.net/npm/qrcode-generator@2.0.4/dist/qrcode.js" integrity="sha256-eeyG+ChWAFsciHkFz8z8++w4Icphx/1alS+qX3ePeRw=" crossorigin="anonymous"></script>
+    <script src="https://cdn.hopjs.net/npm/dompurify@3.3.1/dist/purify.min.js" integrity="sha256-m0lAV/rWZW/ZziCJ0LaJjfljLBDkXkd1pDBzpGz/yMs=" crossorigin="anonymous"></script>
+    
+    <!-- Main Application Script -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
