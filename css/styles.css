@@ -1,55 +1,40 @@
-/* ==========================================================================
-   QR Code Generator - Main Stylesheet
-   ========================================================================== */
+/* QR Code Generator - Main Stylesheet */
 
-/* ==========================================================================
-   1. CSS Custom Properties (Variables)
-   ========================================================================== */
-
+/* CSS Custom Properties */
 :root {
   /* Color Palette */
-  --primary-color: #2c3e50;
-  --secondary-color: #34495e;
-  --accent-color: #3498db;
-  --success-color: #27ae60;
-  --danger-color: #e74c3c;
-  --warning-color: #f39c12;
-  --info-color: #17a2b8;
+  --primary: #2c3e50;
+  --secondary: #34495e;
+  --accent: #3498db;
+  --success: #27ae60;
+  --danger: #e74c3c;
+  --warning: #f39c12;
+  --info: #17a2b8;
   
-  /* Light Theme Colors */
-  --bg-color: #f8f9fa;
-  --text-color: #2c3e50;
-  --border-color: #e9ecef;
+  /* Light Theme */
+  --bg: #f8f9fa;
+  --text: #2c3e50;
+  --border: #e9ecef;
   --card-bg: #ffffff;
   --card-border: #e9ecef;
   --input-bg: #ffffff;
   --input-border: #dee2e6;
-  --input-focus: var(--accent-color);
   --preview-bg: #f8f9fa;
   --preview-border: #dee2e6;
   
-  /* Network Monitor Colors */
+  /* Network Monitor */
   --network-bg: #1e1e1e;
   --network-text: #d4d4d4;
   --network-header: #2d2d2d;
   --network-border: #404040;
   --network-entry: #333;
   --network-hover: rgba(255,255,255,0.03);
-  --network-method-get: #4ec9b0;
-  --network-method-post: #ce9178;
-  --network-method-put: #dcdcaa;
-  --network-method-delete: #dc3545;
-  --network-method-patch: #fd7e14;
-  --network-method-options: #6c757d;
-  --network-method-ws: #9b59b6;
-  --network-status-ok: #27ae60;
-  --network-status-pending: #f39c12;
   --network-url: #9cdcfe;
   --network-type: #808080;
   --network-no-outbound: #198754;
   --network-outbound-warning: #dc3545;
   
-  /* Status Colors */
+  /* Status */
   --status-processing-bg: #fff3cd;
   --status-processing-text: #856404;
   --status-processing-border: #ffc107;
@@ -60,46 +45,41 @@
   --status-error-text: #721c24;
   --status-error-border: #dc3545;
   
-  /* Footer Colors */
+  /* Footer */
   --footer-text: #6c757d;
-  --footer-link: var(--accent-color);
+  --footer-link: var(--accent);
   --footer-link-hover: #2980b9;
-  --footer-link-bg: rgba(52, 152, 219, 0.1);
   
-  /* Badge Colors */
-  --badge-bg: var(--success-color);
-  --badge-accent: var(--accent-color);
-  
-  /* Privacy Policy Colors */
+  /* Privacy */
   --privacy-bg: #f0f7ff;
-  --privacy-border: var(--accent-color);
-  --privacy-text: var(--accent-color);
+  --privacy-border: var(--accent);
+  --privacy-text: var(--accent);
   --privacy-muted: #6c757d;
   
-  /* Typography Scale */
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 1.875rem;
+  /* Typography */
+  --font-xs: 0.75rem;
+  --font-sm: 0.875rem;
+  --font-base: 1rem;
+  --font-lg: 1.125rem;
+  --font-xl: 1.25rem;
+  --font-2xl: 1.5rem;
+  --font-3xl: 1.875rem;
   
-  /* Spacing Scale */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
   
-  /* Shadow Scale */
+  /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   
-  /* Border Radius Scale */
+  /* Border Radius */
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
@@ -107,75 +87,53 @@
   --radius-2xl: 1.5rem;
 }
 
-/* ==========================================================================
-   2. Dark Theme
-   ========================================================================== */
-
+/* Dark Theme */
 [data-theme="dark"] {
-  /* Color Palette - Dark */
-  --primary-color: #2c3e50;
-  --secondary-color: #34495e;
-  --accent-color: #5dade2;
-  --success-color: #2ecc71;
-  --danger-color: #e74c3c;
-  --warning-color: #f39c12;
-  --info-color: #17a2b8;
+  --primary: #2c3e50;
+  --secondary: #34495e;
+  --accent: #5dade2;
+  --success: #2ecc71;
+  --danger: #e74c3c;
+  --warning: #f39c12;
+  --info: #17a2b8;
   
-  /* Dark Theme Colors */
-  --bg-color: #121212;
-  --text-color: #e8e8e8;
-  --border-color: #404040;
+  --bg: #121212;
+  --text: #e8e8e8;
+  --border: #404040;
   --card-bg: #1e1e1e;
   --card-border: #404040;
   --input-bg: #2a2a2a;
   --input-border: #505050;
-  --input-focus: var(--accent-color);
   --preview-bg: #1e1e1e;
   --preview-border: #505050;
   
-  /* Network Monitor Colors - Dark */
   --network-bg: #0d1117;
-  --network-text: #d4d4d4;
   --network-header: #161b22;
   --network-border: #30363d;
-  --network-entry: #333;
-  --network-hover: rgba(255,255,255,0.03);
   
-  /* Status Colors - Dark */
   --status-processing-bg: #2a2a2a;
-  --status-processing-text: #ffa726;
   --status-processing-border: #fb8c00;
   --status-success-bg: #1b4d2c;
-  --status-success-text: #4ade80;
   --status-success-border: #2ecc71;
   --status-error-bg: #4a1f24;
-  --status-error-text: #f87171;
   --status-error-border: #e74c3c;
   
-  /* Footer Colors - Dark */
   --footer-text: #b8b8b8;
   --footer-link: #5dade2;
   --footer-link-hover: #7ec8f0;
-  --footer-link-bg: rgba(93, 173, 226, 0.15);
   
-  /* Privacy Policy Colors - Dark */
   --privacy-bg: #0f1e2e;
   --privacy-border: #5dade2;
   --privacy-text: #5dade2;
   --privacy-muted: #b8b8b8;
   
-  /* Shadows - Dark */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
 }
 
-/* ==========================================================================
-   3. Accessibility Features
-   ========================================================================== */
-
-/* Skip Links */
+/* Accessibility */
 .skip-link {
   position: absolute;
   top: -40px;
@@ -193,9 +151,8 @@
   top: 6px;
 }
 
-/* Enhanced Focus Indicators */
 *:focus {
-  outline: 2px solid var(--accent-color);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -204,15 +161,14 @@
 }
 
 #theme-toggle:focus {
-  outline: 2px solid var(--accent-color);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-/* High Contrast Mode */
 @media (prefers-contrast: high) {
   :root {
-    --primary-color: #000080;
-    --accent-color: #0000ff;
+    --primary: #000080;
+    --accent: #0000ff;
   }
   
   .template-btn {
@@ -220,43 +176,33 @@
   }
 }
 
-/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }
 
-/* ==========================================================================
-   4. Base Styles
-   ========================================================================== */
-
+/* Base Styles */
 * {
   box-sizing: border-box;
 }
 
 body {
-  background: var(--bg-color);
+  background: var(--bg);
   min-height: 100vh;
   padding: 2rem 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: var(--font-size-base);
+  font-size: var(--font-base);
   line-height: 1.6;
-  color: var(--text-color);
+  color: var(--text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* ==========================================================================
-   5. Layout Components
-   ========================================================================== */
-
-/* Main Container */
+/* Layout */
 .main-container {
   background: var(--card-bg);
   border-radius: 12px;
@@ -272,7 +218,6 @@ body {
   }
 }
 
-/* Header */
 .header {
   background: #2c3e50;
   color: white;
@@ -284,18 +229,17 @@ body {
 .header h1 {
   font-weight: 700;
   margin-bottom: 0.25rem;
-  font-size: 1.75rem;
+  font-size: var(--font-3xl);
 }
 
 .header p {
   opacity: 0.9;
   margin-bottom: 0;
-  font-size: 0.9rem;
+  font-size: var(--font-sm);
 }
 
-/* Badge */
 .badge-auto {
-  background: var(--success-color);
+  background: var(--success);
   padding: 0.2rem 0.6rem;
   border-radius: 4px;
   font-size: 0.7rem;
@@ -303,7 +247,6 @@ body {
   font-weight: 500;
 }
 
-/* Theme Toggle */
 .theme-toggle-wrapper {
   display: flex;
   align-items: center;
@@ -341,18 +284,16 @@ body {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Controls Panel */
 .controls-panel {
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border);
 }
 
 @media (max-width: 992px) {
   .controls-panel {
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border);
   }
 }
 
-/* Control Section */
 .control-section {
   border: 1px solid var(--card-border);
   background: var(--card-bg);
@@ -363,19 +304,18 @@ body {
 }
 
 .control-section:hover {
-  border-color: var(--accent-color);
+  border-color: var(--accent);
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 
 .control-section h6 {
-  color: var(--accent-color);
+  color: var(--accent);
   margin-bottom: 0.75rem;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: var(--font-sm);
 }
 
-/* QR Preview */
 .qr-preview {
   background: var(--preview-bg);
   border-radius: 12px;
@@ -390,7 +330,7 @@ body {
 }
 
 .qr-preview.has-qr {
-  border-color: var(--accent-color);
+  border-color: var(--accent);
   background: var(--card-bg);
   border-style: solid;
   box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
@@ -408,11 +348,7 @@ body {
   border-radius: 8px;
 }
 
-/* ==========================================================================
-   6. Interactive Components
-   ========================================================================== */
-
-/* Template Buttons */
+/* Interactive Components */
 .template-btn {
   width: 100%;
   height: 100px;
@@ -431,22 +367,22 @@ body {
 }
 
 .template-btn:hover {
-  border-color: var(--accent-color);
+  border-color: var(--accent);
   background: var(--card-bg);
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(52, 152, 219, 0.2);
 }
 
 .template-btn.active {
-  border-color: var(--accent-color);
-  background: var(--accent-color);
+  border-color: var(--accent);
+  background: var(--accent);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(52, 152, 219, 0.3);
 }
 
 .template-btn i {
   font-size: 1.5rem;
-  color: var(--accent-color);
+  color: var(--accent);
   display: block;
   margin-bottom: 0.25rem;
   transition: color 0.3s ease;
@@ -455,7 +391,7 @@ body {
 .template-btn small {
   font-size: 0.7rem;
   font-weight: 500;
-  color: var(--text-color);
+  color: var(--text);
   transition: color 0.3s ease;
 }
 
@@ -464,9 +400,8 @@ body {
   color: white;
 }
 
-/* Primary Button */
 .btn-primary {
-  background: var(--accent-color);
+  background: var(--accent);
   border: none;
   font-weight: 500;
   border-radius: 6px;
@@ -477,22 +412,20 @@ body {
   background: #2980b9;
 }
 
-/* Outline Primary Button */
 .btn-outline-primary {
-  border-color: var(--accent-color);
-  color: var(--accent-color);
+  border-color: var(--accent);
+  color: var(--accent);
   border-radius: 6px;
   font-weight: 500;
   transition: all 0.2s ease;
 }
 
 .btn-outline-primary:hover {
-  background: var(--accent-color);
-  border-color: var(--accent-color);
+  background: var(--accent);
+  border-color: var(--accent);
   color: white;
 }
 
-/* Form Controls */
 .form-control,
 .form-select {
   min-height: 38px;
@@ -501,7 +434,7 @@ body {
 
 .form-control:focus,
 .form-select:focus {
-  border-color: var(--input-focus);
+  border-color: var(--accent);
   box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
   transform: translateY(-1px);
 }
@@ -542,18 +475,16 @@ body {
   color: #121212;
 }
 
-/* Range Input */
 .form-range::-webkit-slider-thumb {
-  background: var(--accent-color);
+  background: var(--accent);
   transition: background-color 0.2s ease;
 }
 
 .form-range::-moz-range-thumb {
-  background: var(--accent-color);
+  background: var(--accent);
   transition: background-color 0.2s ease;
 }
 
-/* Color Preview */
 .color-preview {
   width: 36px;
   height: 36px;
@@ -570,7 +501,6 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Logo Preview */
 .logo-preview {
   max-width: 60px;
   max-height: 60px;
@@ -578,11 +508,7 @@ body {
   border: 2px solid var(--input-border);
 }
 
-/* ==========================================================================
-   7. Status Indicators
-   ========================================================================== */
-
-/* Loading States */
+/* Status Indicators */
 .loading {
   position: relative;
   color: transparent !important;
@@ -597,7 +523,7 @@ body {
   height: 20px;
   margin: -10px 0 0 -10px;
   border: 2px solid #f3f3f3;
-  border-top: 2px solid var(--accent-color);
+  border-top: 2px solid var(--accent);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -607,7 +533,6 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-/* Status Indicators */
 .status-indicator {
   display: none;
   padding: 0.4rem 0.75rem;
@@ -639,10 +564,7 @@ body {
   border-left-color: var(--status-error-border);
 }
 
-/* ==========================================================================
-   8. Network Monitor
-   ========================================================================== */
-
+/* Network Monitor */
 .network-monitor {
   background: var(--network-bg);
   color: var(--network-text);
@@ -705,13 +627,13 @@ body {
   justify-self: start;
 }
 
-.method-get { background: var(--network-method-get); color: #ffffff; }
-.method-post { background: var(--network-method-post); color: #000000; }
-.method-put { background: var(--network-method-put); color: #000000; }
-.method-delete { background: var(--network-method-delete); color: #ffffff; }
-.method-patch { background: var(--network-method-patch); color: #000000; }
-.method-options { background: var(--network-method-options); color: #ffffff; }
-.method-ws { background: var(--network-method-ws); color: #ffffff; }
+.method-get { background: #4ec9b0; color: #ffffff; }
+.method-post { background: #ce9178; color: #000000; }
+.method-put { background: #dcdcaa; color: #000000; }
+.method-delete { background: #dc3545; color: #ffffff; }
+.method-patch { background: #fd7e14; color: #000000; }
+.method-options { background: #6c757d; color: #ffffff; }
+.method-ws { background: #9b59b6; color: #ffffff; }
 
 .no-outbound {
   background: var(--network-no-outbound);
@@ -731,14 +653,14 @@ body {
 }
 
 .status-ok {
-  color: var(--network-status-ok);
+  color: #27ae60;
   justify-self: end;
   text-align: right;
   min-width: 30px;
 }
 
 .status-pending {
-  color: var(--network-status-pending);
+  color: #f39c12;
   justify-self: end;
   text-align: right;
   min-width: 30px;
@@ -775,7 +697,6 @@ body {
   text-decoration: underline;
 }
 
-/* Animation for new entries */
 @keyframes slideUp {
   from {
     opacity: 0;
@@ -787,10 +708,7 @@ body {
   }
 }
 
-/* ==========================================================================
-   9. Footer
-   ========================================================================== */
-
+/* Footer */
 .footer-link {
   color: var(--footer-link);
   text-decoration: none;
@@ -802,14 +720,11 @@ body {
 
 .footer-link:hover {
   color: var(--footer-link-hover);
-  background: var(--footer-link-bg);
+  background: rgba(52, 152, 219, 0.1);
   text-decoration: underline;
 }
 
-/* ==========================================================================
-   10. Form Validation
-   ========================================================================== */
-
+/* Form Validation */
 .is-valid {
   border-color: #198754;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='m2.3 6.73.94-.94 1.96 1.96 2.66-2.66.94.94-3.6 3.6z'/%3e%3c/svg%3e");
@@ -842,11 +757,7 @@ body {
   color: #198754;
 }
 
-/* ==========================================================================
-   11. Responsive Design
-   ========================================================================== */
-
-/* Tablet and below (max-width: 992px) */
+/* Responsive */
 @media (max-width: 992px) {
   .col-lg-4,
   .col-lg-8 {
@@ -855,7 +766,6 @@ body {
   }
 }
 
-/* Mobile (max-width: 768px) */
 @media (max-width: 768px) {
   body {
     padding: 0.5rem 0;
@@ -868,12 +778,12 @@ body {
   }
   
   .header h1 {
-    font-size: 1.5rem;
+    font-size: var(--font-2xl);
     margin-bottom: 0.5rem;
   }
   
   .header p {
-    font-size: 0.8rem;
+    font-size: var(--font-xs);
   }
   
   .qr-preview {
@@ -902,11 +812,10 @@ body {
     font-size: 0.65rem;
   }
   
-  /* Touch-friendly form controls */
   .form-control,
   .form-select {
     min-height: 44px;
-    font-size: 16px; /* Prevents zoom on iOS */
+    font-size: 16px;
   }
   
   .form-range {
@@ -923,7 +832,6 @@ body {
     padding: 0.5rem 1rem;
   }
   
-  /* Stack color controls vertically on mobile */
   .d-flex.gap-2.align-items-center {
     flex-direction: column;
     align-items: stretch !important;
@@ -934,14 +842,12 @@ body {
     align-self: center;
   }
   
-  /* Better spacing for mobile */
   .row.g-2 {
     --bs-gutter-x: 0.5rem;
     --bs-gutter-y: 0.5rem;
   }
 }
 
-/* Small Mobile (max-width: 576px) */
 @media (max-width: 576px) {
   .container {
     padding: 0 0.5rem;
@@ -957,7 +863,7 @@ body {
   }
   
   .header h1 {
-    font-size: 1.25rem;
+    font-size: var(--font-xl);
   }
   
   .control-section {
@@ -969,12 +875,10 @@ body {
     padding: 0.75rem;
   }
   
-  /* Single column template buttons on very small screens */
   .template-btn {
     margin-bottom: 0.5rem;
   }
   
-  /* Larger touch targets for mobile */
   .template-btn,
   .btn,
   .form-control,
@@ -982,18 +886,16 @@ body {
     min-height: 48px;
   }
   
-  /* Better text sizing */
   .form-label.small {
-    font-size: 0.875rem;
+    font-size: var(--font-sm);
     font-weight: 600;
   }
   
   .form-text {
-    font-size: 0.75rem;
+    font-size: var(--font-xs);
   }
 }
 
-/* Landscape Phone (max-height: 500px) */
 @media (max-height: 500px) and (orientation: landscape) {
   body {
     padding: 0.25rem 0;
@@ -1004,12 +906,12 @@ body {
   }
   
   .header h1 {
-    font-size: 1.1rem;
+    font-size: var(--font-lg);
     margin-bottom: 0.25rem;
   }
   
   .header p {
-    font-size: 0.7rem;
+    font-size: var(--font-xs);
   }
   
   .qr-preview {
@@ -1023,7 +925,6 @@ body {
   }
 }
 
-/* High DPI Displays */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .qr-preview {
     image-rendering: -webkit-optimize-contrast;
@@ -1031,7 +932,6 @@ body {
   }
 }
 
-/* Touch Device Optimizations */
 @media (hover: none) and (pointer: coarse) {
   .template-btn:hover {
     transform: none;
@@ -1052,7 +952,6 @@ body {
   }
 }
 
-/* Reduced Motion for Mobile */
 @media (prefers-reduced-motion: reduce) and (max-width: 768px) {
   .template-btn {
     transition: none;
@@ -1062,87 +961,3 @@ body {
     transform: none;
   }
 }
-
-/* ==========================================================================
-   12. Dark Mode Specific Adjustments
-   ========================================================================== */
-
-[data-theme="dark"] .control-section {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-[data-theme="dark"] .control-section:hover {
-  box-shadow: 0 4px 12px rgba(93, 173, 226, 0.2), 0 2px 8px rgba(0, 0, 0, 0.4);
-}
-
-[data-theme="dark"] .template-btn {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-[data-theme="dark"] .template-btn:hover {
-  box-shadow: 0 4px 12px rgba(93, 173, 226, 0.25);
-}
-
-[data-theme="dark"] .template-btn.active {
-  background: var(--accent-color);
-  box-shadow: 0 4px 12px rgba(93, 173, 226, 0.25);
-}
-
-[data-theme="dark"] #controls-panel {
-  background: #0d0d0d !important;
-}
-
-/* ==========================================================================
-    13. Breadcrumb Styles
-    ========================================================================== */
-
-/* Breadcrumb - Light Mode */
-.breadcrumb {
-  background: transparent;
-  margin-bottom: 0;
-  padding: 0.5rem 0;
-}
-
-.breadcrumb-item a {
-  color: var(--accent-color);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.breadcrumb-item a:hover {
-  color: var(--footer-link-hover);
-  text-decoration: underline;
-}
-
-.breadcrumb-item.active {
-  color: var(--text-color);
-  opacity: 0.8;
-}
-
-.breadcrumb-item + .breadcrumb-item::before {
-  color: var(--text-color);
-  opacity: 0.6;
-}
-
-/* Breadcrumb - Dark Mode */
-[data-theme="dark"] .breadcrumb-item a {
-  color: var(--footer-link);
-}
-
-[data-theme="dark"] .breadcrumb-item a:hover {
-  color: var(--footer-link-hover);
-}
-
-[data-theme="dark"] .breadcrumb-item.active {
-  color: var(--text-color);
-  opacity: 0.9;
-}
-
-[data-theme="dark"] .breadcrumb-item + .breadcrumb-item::before {
-  color: var(--text-color);
-  opacity: 0.7;
-}
-
-/* ==========================================================================
-    End of Stylesheet
-    ========================================================================== */
