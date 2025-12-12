@@ -1093,5 +1093,56 @@ body {
 }
 
 /* ==========================================================================
-   End of Stylesheet
-   ========================================================================== */
+    13. Breadcrumb Styles
+    ========================================================================== */
+
+/* Breadcrumb - Light Mode */
+.breadcrumb {
+  background: transparent;
+  margin-bottom: 0;
+  padding: 0.5rem 0;
+}
+
+.breadcrumb-item a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-item a:hover {
+  color: var(--footer-link-hover);
+  text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  color: var(--text-color);
+  opacity: 0.6;
+}
+
+/* Breadcrumb - Dark Mode */
+[data-theme="dark"] .breadcrumb-item a {
+  color: var(--footer-link);
+}
+
+[data-theme="dark"] .breadcrumb-item a:hover {
+  color: var(--footer-link-hover);
+}
+
+[data-theme="dark"] .breadcrumb-item.active {
+  color: var(--text-color);
+  opacity: 0.9;
+}
+
+[data-theme="dark"] .breadcrumb-item + .breadcrumb-item::before {
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+    End of Stylesheet
+    ========================================================================== */
