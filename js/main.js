@@ -1115,16 +1115,21 @@
             addTrackedEventListener(downloadSvg, 'click', () => download('svg'));
         }
         
-        // Auto-generate on input
+        // Auto-generate on input - only for text inputs and textareas
         dom.$$('.qr-input').forEach(el => {
-            addTrackedEventListener(el, 'input', () => {
-                validateInput(el);
-                debouncedGenerate();
-            });
-            addTrackedEventListener(el, 'change', () => {
-                validateInput(el);
-                debouncedGenerate();
-            });
+            if (el.tagName === 'INPUT' && el.type !== 'file' || el.tagName === 'TEXTAREA') {
+                // Use input event for real-time updates on text fields
+                addTrackedEventListener(el, 'input', () => {
+                    validateInput(el);
+                    debouncedGenerate();
+                });
+            } else if (el.tagName === 'SELECT' || el.type === 'checkbox') {
+                // Use change event for select dropdowns and checkboxes
+                addTrackedEventListener(el, 'change', () => {
+                    validateInput(el);
+                    debouncedGenerate();
+                });
+            }
         });
     }
     
