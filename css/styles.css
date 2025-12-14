@@ -112,10 +112,13 @@
   --network-border: #30363d;
   
   --status-processing-bg: #2a2a2a;
+  --status-processing-text: #ffd54f;
   --status-processing-border: #fb8c00;
   --status-success-bg: #1b4d2c;
+  --status-success-text: #2ecc71;
   --status-success-border: #2ecc71;
   --status-error-bg: #4a1f24;
+  --status-error-text: #ffab91;
   --status-error-border: #e74c3c;
   
   --footer-text: #b8b8b8;
