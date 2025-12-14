@@ -145,6 +145,9 @@
   border-radius: 4px;
   z-index: 1000;
   transition: top 0.3s ease;
+  transition: top 0.3s ease, -webkit-transform 0.3s ease;
+  transition: top 0.3s ease, transform 0.3s ease;
+  transition: top 0.3s ease, transform 0.3s ease, -webkit-transform 0.3s ease;
 }
 
 .skip-link:focus {
@@ -178,9 +181,12 @@
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    -webkit-animation-duration: 0.01ms !important;
+            animation-duration: 0.01ms !important;
+    -webkit-animation-iteration-count: 1 !important;
+            animation-iteration-count: 1 !important;
+    -webkit-transition-duration: 0.01ms !important;
+            transition-duration: 0.01ms !important;
   }
 }
 
@@ -285,6 +291,7 @@ body {
 }
 
 .controls-panel {
+  background: var(--card-bg);
   border-bottom: 1px solid var(--border);
 }
 
@@ -346,6 +353,25 @@ body {
   max-width: 100%;
   height: auto;
   border-radius: 8px;
+}
+
+/* QR Code Dimensions Display */
+.qr-dimensions {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  z-index: 10;
+}
+
+[data-theme="dark"] .qr-dimensions {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--text);
 }
 
 /* Interactive Components */
@@ -485,6 +511,18 @@ body {
   transition: background-color 0.2s ease;
 }
 
+/* Disabled select options styling */
+select.form-select option:disabled {
+  color: var(--footer-text);
+  background-color: var(--input-bg);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+select.form-select:has(option:disabled) {
+  cursor: pointer;
+}
+
 .color-preview {
   width: 36px;
   height: 36px;
@@ -506,6 +544,57 @@ body {
   max-height: 60px;
   border-radius: 6px;
   border: 2px solid var(--input-border);
+}
+
+/* File Input Styling - Vertically center "Choose file" button and text */
+input[type="file"].form-control {
+  display: flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  min-height: 38px;
+}
+
+input[type="file"].form-control::-webkit-file-upload-button {
+  margin: 0;
+  margin-right: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  height: auto;
+  align-self: center;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+input[type="file"].form-control::-webkit-file-upload-button:hover {
+  background-color: #2980b9;
+  transform: translateY(-1px);
+}
+
+input[type="file"].form-control::file-selector-button {
+  margin: 0;
+  margin-right: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  height: auto;
+  align-self: center;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+input[type="file"].form-control::file-selector-button:hover {
+  background-color: #2980b9;
+  transform: translateY(-1px);
 }
 
 /* Status Indicators */

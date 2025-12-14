@@ -68,7 +68,7 @@
             
             <main id="main-content" class="row g-0">
                 <!-- Controls Panel -->
-                <aside id="controls-panel" class="col-lg-6 p-3" style="background: #fafbfc;" role="complementary" aria-label="QR code configuration controls">
+                <aside id="controls-panel" class="col-lg-6 p-3" role="complementary" aria-label="QR code configuration controls">
                     <!-- Templates -->
                     <section class="control-section" role="region" aria-labelledby="template-heading">
                         <h6 id="template-heading"><i class="bi bi-grid-3x3-gap" aria-hidden="true"></i> Template</h6>
@@ -90,12 +90,20 @@
                     
                     <!-- Content -->
                     <section class="control-section" role="region" aria-labelledby="content-heading">
-                        <h6 id="content-heading"><i class="bi bi-pencil" aria-hidden="true"></i> Content</h6>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 id="content-heading" class="mb-0"><i class="bi bi-pencil" aria-hidden="true"></i> Content</h6>
+                            <button class="btn btn-sm btn-outline-primary" id="clear-all-btn" aria-label="Clear all settings">
+                                <i class="bi bi-eraser" aria-hidden="true"></i> Clear All
+                            </button>
+                        </div>
                         
                         <div id="input-text" class="template-input" role="group" aria-labelledby="text-content-label">
                             <label id="text-content-label" class="visually-hidden" for="text-content">Text or URL content</label>
                             <textarea class="form-control form-control-sm qr-input" id="text-content" rows="2" placeholder="Enter text or URL..." aria-describedby="text-content-help">https://github.com</textarea>
-                            <div id="text-content-help" class="form-text">Enter any text or URL to encode in the QR code</div>
+                            <div class="d-flex justify-content-between align-items-center mt-1">
+                                <div id="text-content-help" class="form-text mb-0">Enter any text or URL to encode in the QR code</div>
+                                <div id="char-count" class="form-text mb-0"><span id="char-count-value">18</span> characters</div>
+                            </div>
                         </div>
                         
                         <div id="input-wifi" class="template-input" style="display:none;" role="group" aria-labelledby="wifi-heading">
@@ -307,7 +315,7 @@
                                 <div id="qr-size-help" class="form-text">Adjust the QR code size (200-1000px)</div>
                             </div>
                             <div class="col-6">
-                                <label for="margin-size" class="form-label small">Margin: <strong id="margin-display">2</strong></label>
+                                <label for="margin-size" class="form-label small" data-bs-toggle="tooltip" data-bs-title="White space around the QR code that helps scanners read it correctly">Margin: <strong id="margin-display">2</strong></label>
                                 <input type="range" class="form-range qr-input" id="margin-size" min="0" max="8" value="2" step="1" aria-describedby="margin-size-help">
                                 <div id="margin-size-help" class="form-text">White space around QR code (0-8)</div>
                             </div>
@@ -345,7 +353,7 @@
                                 <div id="dot-style-help" class="form-text">Shape of the QR code modules</div>
                             </div>
                             <div class="col-6">
-                                <label for="error-correction" class="form-label small">Error Correction</label>
+                                <label for="error-correction" class="form-label small" data-bs-toggle="tooltip" data-bs-title="Determines how much damage the QR code can sustain while remaining readable">Error Correction</label>
                                 <select class="form-select form-select-sm qr-input" id="error-correction" aria-describedby="error-correction-help">
                                     <option value="L">Low (7%)</option>
                                     <option value="M" selected>Medium (15%)</option>
@@ -354,6 +362,11 @@
                                 </select>
                                 <div id="error-correction-help" class="form-text">Higher levels allow logo embedding</div>
                             </div>
+                        </div>
+                        <div class="mt-2">
+                            <button class="btn btn-sm btn-outline-primary w-100" id="randomize-colors-btn" aria-label="Randomize colors">
+                                <i class="bi bi-palette2" aria-hidden="true"></i> Random Colors
+                            </button>
                         </div>
                     </section>
                     
@@ -390,6 +403,9 @@
                         <div id="placeholder" class="text-center text-muted">
                             <i class="bi bi-qr-code" style="font-size:4rem;opacity:0.3;" aria-hidden="true"></i>
                             <p class="mt-2 mb-0 small">QR code will appear here</p>
+                        </div>
+                        <div id="qr-dimensions" class="qr-dimensions" style="display:none;">
+                            <span class="qr-dimensions-value">400</span> × <span class="qr-dimensions-value">400</span> px
                         </div>
                     </div>
                     

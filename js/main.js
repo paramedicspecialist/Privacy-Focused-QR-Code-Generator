@@ -17,7 +17,8 @@ const state = {
   debounceTimer: null,
   generating: false,
   cache: new Map(),
-  lastConfig: ''
+  lastConfig: '',
+  tooltips: null
 };
 
 const $ = id => document.getElementById(id);
@@ -54,7 +55,8 @@ function setActiveTemplate(btn) {
   btn.classList.add('active');
   btn.setAttribute('aria-checked', 'true');
   
-  const target = $(`input-${btn.dataset.template}`);
+  const targetId = 'input-' + btn.dataset.template;
+  const target = $(targetId);
   if (target) target.style.display = 'block';
   
   debouncedGenerate();
@@ -147,6 +149,7 @@ function setupLogoUpload() {
         $('logo-preview').src = ev.target.result;
         $('logo-preview-wrap').style.display = 'block';
         $('error-correction').value = 'H';
+        updateErrorCorrectionState(true);
         state.cache.clear();
         debouncedGenerate();
       });
@@ -160,7 +163,34 @@ function setupLogoUpload() {
       state.logo = null;
       upload.value = '';
       $('logo-preview-wrap').style.display = 'none';
+      updateErrorCorrectionState(false);
       debouncedGenerate();
+    });
+  }
+}
+
+// Update error correction dropdown state
+function updateErrorCorrectionState(hasLogo) {
+  const ecSelect = $('error-correction');
+  if (!ecSelect) return;
+  
+  if (hasLogo) {
+    // Disable all options except 'H' (High)
+    Array.from(ecSelect.options).forEach(option => {
+      if (option.value !== 'H') {
+        option.disabled = true;
+      }
+    });
+    ecSelect.disabled = false; // Keep dropdown enabled but only H is selectable
+    
+    // Ensure H is selected if not already
+    if (ecSelect.value !== 'H') {
+      ecSelect.value = 'H';
+    }
+  } else {
+    // Re-enable all options
+    Array.from(ecSelect.options).forEach(option => {
+      option.disabled = false;
     });
   }
 }
@@ -273,6 +303,9 @@ function displayQRCode(canvas) {
   
   container.appendChild(canvas);
   if (download) download.style.display = 'block';
+  
+  // Update QR dimensions display
+  updateQRDimensions();
   
   state.canvas = canvas;
   showStatus('<i class="bi bi-check-circle-fill"></i> Ready', 'success', CONFIG.STATUS_TIMEOUT);
@@ -400,6 +433,24 @@ function setupEventListeners() {
     btn.addEventListener('click', () => setActiveTemplate(btn));
   });
 
+  // Quick action buttons
+  const clearAllBtn = $('clear-all-btn');
+  const randomizeColorsBtn = $('randomize-colors-btn');
+
+  if (clearAllBtn) {
+    clearAllBtn.addEventListener('click', clearAllSettings);
+  }
+
+  if (randomizeColorsBtn) {
+    randomizeColorsBtn.addEventListener('click', randomizeColors);
+  }
+
+  // Character count
+  const textContent = $('text-content');
+  if (textContent) {
+    textContent.addEventListener('input', updateCharCount);
+  }
+
   // Social/app previews
   const socialPlatform = $('social-platform');
   const socialUsername = $('social-username');
@@ -485,6 +536,184 @@ function updateAppPreview() {
   }
 }
 
+// Clear all settings
+function clearAllSettings() {
+  // Get current template
+  const activeTemplate = document.querySelector('.template-btn.active');
+  const currentTemplate = activeTemplate ? activeTemplate.dataset.template : 'text';
+  
+  // Clear content based on current template
+  switch (currentTemplate) {
+    case 'text':
+      $('text-content').value = '';
+      break;
+    case 'wifi':
+      $('wifi-ssid').value = '';
+      $('wifi-password').value = '';
+      $('wifi-encryption').value = 'WPA';
+      $('wifi-hidden').checked = false;
+      break;
+    case 'vcard':
+      $('vcard-name').value = '';
+      $('vcard-org').value = '';
+      $('vcard-title').value = '';
+      $('vcard-phone').value = '';
+      $('vcard-email').value = '';
+      $('vcard-url').value = '';
+      $('vcard-address').value = '';
+      break;
+    case 'email':
+      $('email-to').value = '';
+      $('email-subject').value = '';
+      $('email-body').value = '';
+      break;
+    case 'sms':
+      $('sms-phone').value = '';
+      $('sms-message').value = '';
+      break;
+    case 'phone':
+      $('phone-number').value = '';
+      break;
+    case 'mecard':
+      $('mecard-name').value = '';
+      $('mecard-phone').value = '';
+      $('mecard-email').value = '';
+      $('mecard-url').value = '';
+      $('mecard-address').value = '';
+      $('mecard-birthday').value = '';
+      $('mecard-note').value = '';
+      break;
+    case 'event':
+      $('event-title').value = '';
+      $('event-start').value = '';
+      $('event-end').value = '';
+      $('event-location').value = '';
+      $('event-description').value = '';
+      $('event-timezone').value = 'UTC';
+      break;
+    case 'bitcoin':
+      $('bitcoin-address').value = '';
+      $('bitcoin-amount').value = '';
+      $('bitcoin-label').value = '';
+      $('bitcoin-message').value = '';
+      break;
+    case 'geo':
+      $('geo-latitude').value = '';
+      $('geo-longitude').value = '';
+      $('geo-altitude').value = '';
+      $('geo-query').value = '';
+      break;
+    case 'social':
+      $('social-platform').value = 'facebook';
+      $('social-username').value = '';
+      break;
+    case 'app':
+      $('app-platform').value = 'ios';
+      $('app-id').value = '';
+      break;
+  }
+  
+  // Reset design settings
+  $('qr-size').value = '400';
+  $('size-display').textContent = '400';
+  $('margin-size').value = '2';
+  $('margin-display').textContent = '2';
+  $('fg-color').value = '#000000';
+  $('fg-hex').value = '#000000';
+  $('fg-preview').style.backgroundColor = '#000000';
+  $('bg-color').value = '#ffffff';
+  $('bg-hex').value = '#ffffff';
+  $('bg-preview').style.backgroundColor = '#ffffff';
+  $('dot-style').value = 'square';
+  $('error-correction').value = 'M';
+  $('logo-size').value = '20';
+  $('logo-size-display').textContent = '20';
+  
+  // Clear logo
+  state.logo = null;
+  $('logo-upload').value = '';
+  $('logo-preview-wrap').style.display = 'none';
+  updateErrorCorrectionState(false);
+  
+  // Clear cache
+  state.cache.clear();
+  
+  // Update character count
+  updateCharCount();
+  
+  // Regenerate
+  debouncedGenerate();
+  
+  showStatus('<i class="bi bi-check-circle-fill"></i> Settings cleared', 'success');
+}
+
+// Randomize colors with good contrast
+function randomizeColors() {
+  // Generate random colors
+  const hue1 = Math.floor(Math.random() * 360);
+  const hue2 = (hue1 + 180) % 360; // Complementary color for contrast
+  
+  const fgColor = `hsl(${hue1}, 70%, 30%)`;
+  const bgColor = `hsl(${hue2}, 70%, 90%)`;
+  
+  // Convert to hex
+  const fgHex = hslToHex(hue1, 70, 30);
+  const bgHex = hslToHex(hue2, 70, 90);
+  
+  // Apply colors
+  $('fg-color').value = fgHex;
+  $('fg-hex').value = fgHex;
+  $('fg-preview').style.backgroundColor = fgHex;
+  $('bg-color').value = bgHex;
+  $('bg-hex').value = bgHex;
+  $('bg-preview').style.backgroundColor = bgHex;
+  
+  // Regenerate
+  debouncedGenerate();
+  
+  showStatus('<i class="bi bi-palette2"></i> Colors randomized', 'success');
+}
+
+// Convert HSL to HEX
+function hslToHex(h, s, l) {
+  l /= 100;
+  const a = s * Math.min(l, 1 - l) / 100;
+  const f = n => {
+    const k = (n + h / 30) % 12;
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color).toString(16).padStart(2, '0');
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+
+// Update character count
+function updateCharCount() {
+  const textContent = $('text-content');
+  const charCountValue = $('char-count-value');
+  if (!textContent || !charCountValue) return;
+  
+  const count = textContent.value.length;
+  charCountValue.textContent = count;
+}
+
+// Update QR code dimensions display
+function updateQRDimensions() {
+  const size = parseInt($('qr-size')?.value || '400', 10);
+  const dimensionsContainer = $('qr-dimensions');
+  const dimensionsValue = dimensionsContainer?.querySelectorAll('.qr-dimensions-value');
+  
+  if (!dimensionsContainer || !dimensionsValue) return;
+  
+  // Show dimensions when QR code is displayed
+  if ($('qrcode').children.length > 0) {
+    dimensionsContainer.style.display = 'block';
+    dimensionsValue.forEach(span => span.textContent = size);
+  } else {
+    dimensionsContainer.style.display = 'none';
+  }
+}
+
 // Initialization
 async function init() {
   try {
@@ -504,6 +733,16 @@ async function init() {
     setupLogoUpload();
     setupEventListeners();
     
+    // Initialize tooltips
+    if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
+      state.tooltips = new bootstrap.Tooltip(document.body, {
+        selector: '[data-bs-toggle="tooltip"]'
+      });
+    }
+    
+    // Initialize character count
+    updateCharCount();
+    
     // Initial generation
     setTimeout(() => generate(), CONFIG.INITIAL_DELAY);
     
@@ -519,6 +758,17 @@ async function init() {
     setupRangeSliders();
     setupLogoUpload();
     setupEventListeners();
+    
+    // Initialize tooltips (fallback)
+    if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
+      state.tooltips = new bootstrap.Tooltip(document.body, {
+        selector: '[data-bs-toggle="tooltip"]'
+      });
+    }
+    
+    // Initialize character count
+    updateCharCount();
+    
     setTimeout(() => generate(), CONFIG.INITIAL_DELAY);
   }
 }

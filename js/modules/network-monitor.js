@@ -192,10 +192,14 @@ export class NetworkMonitor {
   }
 
   interceptWebSocket() {
-    window.WebSocket = (url, protocols) => {
-      this.addEntry('WS', 'websocket', url, '🔌');
-      this.markOutbound('WS', url);
-      return new this.originalWebSocket(url, protocols);
-    };
+    const self = this;
+    window.WebSocket = new Proxy(self.originalWebSocket, {
+      construct(target, args) {
+        const [url, protocols] = args;
+        self.addEntry('WS', 'websocket', url, '🔌');
+        self.markOutbound('WS', url);
+        return new target(url, protocols);
+      }
+    });
   }
 }
