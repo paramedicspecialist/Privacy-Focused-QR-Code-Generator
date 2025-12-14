@@ -54,7 +54,10 @@
         <div class="main-container">
             <!-- Header -->
             <header class="header" role="banner">
-                <div class="theme-toggle-wrapper" style="position: absolute; right: 2rem; top: 50%; transform: translateY(-50%);">
+                <div class="header-controls" style="position: absolute; right: 2rem; top: 50%; transform: translateY(-50%); display: flex; gap: 1.5rem;">
+                    <button id="clear-all-btn" class="btn btn-sm btn-outline-light" aria-label="Clear all settings" title="Clear all settings">
+                        <i class="bi bi-eraser" aria-hidden="true"></i> Clear All
+                    </button>
                     <button id="theme-toggle" class="btn btn-sm btn-outline-light" aria-label="Toggle dark mode" title="Toggle dark mode">
                         <i class="bi bi-sun-fill" id="theme-icon-light" aria-hidden="true"></i>
                         <i class="bi bi-moon-fill" id="theme-icon-dark" aria-hidden="true" style="display: none;"></i>
@@ -90,12 +93,7 @@
                     
                     <!-- Content -->
                     <section class="control-section" role="region" aria-labelledby="content-heading">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <h6 id="content-heading" class="mb-0"><i class="bi bi-pencil" aria-hidden="true"></i> Content</h6>
-                            <button class="btn btn-sm btn-outline-primary" id="clear-all-btn" aria-label="Clear all settings">
-                                <i class="bi bi-eraser" aria-hidden="true"></i> Clear All
-                            </button>
-                        </div>
+                        <h6 id="content-heading" class="mb-2"><i class="bi bi-pencil" aria-hidden="true"></i> Content</h6>
                         
                         <div id="input-text" class="template-input" role="group" aria-labelledby="text-content-label">
                             <label id="text-content-label" class="visually-hidden" for="text-content">Text or URL content</label>
@@ -104,6 +102,7 @@
                                 <div id="text-content-help" class="form-text mb-0">Enter any text or URL to encode in the QR code</div>
                                 <div id="char-count" class="form-text mb-0"><span id="char-count-value">18</span> characters</div>
                             </div>
+                            <div class="invalid-feedback"></div>
                         </div>
                         
                         <div id="input-wifi" class="template-input" style="display:none;" role="group" aria-labelledby="wifi-heading">
@@ -147,9 +146,11 @@
                             
                             <label for="vcard-email" class="form-label small">Email</label>
                             <input type="email" class="form-control form-control-sm qr-input mb-2" id="vcard-email" placeholder="Email">
+                            <div class="invalid-feedback"></div>
                             
                             <label for="vcard-url" class="form-label small">Website</label>
                             <input type="url" class="form-control form-control-sm qr-input mb-2" id="vcard-url" placeholder="Website">
+                            <div class="invalid-feedback"></div>
                             
                             <label for="vcard-address" class="form-label small">Address</label>
                             <input type="text" class="form-control form-control-sm qr-input" id="vcard-address" placeholder="Address">
@@ -159,6 +160,7 @@
                             <h6 id="email-heading" class="visually-hidden">Email Configuration</h6>
                             <label for="email-to" class="form-label small">To Email</label>
                             <input type="email" class="form-control form-control-sm qr-input mb-2" id="email-to" placeholder="To Email" value="hello@example.com">
+                            <div class="invalid-feedback"></div>
                             
                             <label for="email-subject" class="form-label small">Subject</label>
                             <input type="text" class="form-control form-control-sm qr-input mb-2" id="email-subject" placeholder="Subject">
@@ -171,6 +173,7 @@
                             <h6 id="sms-heading" class="visually-hidden">SMS Configuration</h6>
                             <label for="sms-phone" class="form-label small">Phone Number</label>
                             <input type="tel" class="form-control form-control-sm qr-input mb-2" id="sms-phone" placeholder="Phone Number" value="+1234567890">
+                            <div class="invalid-feedback"></div>
                             
                             <label for="sms-message" class="form-label small">Message</label>
                             <textarea class="form-control form-control-sm qr-input" id="sms-message" rows="2" placeholder="Message"></textarea>
@@ -180,6 +183,7 @@
                             <h6 id="phone-heading" class="visually-hidden">Phone Number</h6>
                             <label for="phone-number" class="form-label small">Phone Number</label>
                             <input type="tel" class="form-control form-control-sm qr-input" id="phone-number" placeholder="Phone Number" value="+1234567890">
+                            <div class="invalid-feedback"></div>
                         </div>
                         
                         <div id="input-mecard" class="template-input" style="display:none;" role="group" aria-labelledby="mecard-heading">
@@ -189,12 +193,15 @@
                             
                             <label for="mecard-phone" class="form-label small">Phone</label>
                             <input type="tel" class="form-control form-control-sm qr-input mb-2" id="mecard-phone" placeholder="Phone">
+                            <div class="invalid-feedback"></div>
                             
                             <label for="mecard-email" class="form-label small">Email</label>
                             <input type="email" class="form-control form-control-sm qr-input mb-2" id="mecard-email" placeholder="Email">
+                            <div class="invalid-feedback"></div>
                             
                             <label for="mecard-url" class="form-label small">Website</label>
                             <input type="url" class="form-control form-control-sm qr-input mb-2" id="mecard-url" placeholder="Website">
+                            <div class="invalid-feedback"></div>
                             
                             <label for="mecard-address" class="form-label small">Address</label>
                             <input type="text" class="form-control form-control-sm qr-input mb-2" id="mecard-address" placeholder="Address">
@@ -240,6 +247,7 @@
                             <h6 id="bitcoin-heading" class="visually-hidden">Bitcoin Payment Information</h6>
                             <label for="bitcoin-address" class="form-label small">Bitcoin Address</label>
                             <input type="text" class="form-control form-control-sm qr-input mb-2" id="bitcoin-address" placeholder="Bitcoin Address">
+                            <div class="invalid-feedback"></div>
                             
                             <label for="bitcoin-amount" class="form-label small">Amount (BTC)</label>
                             <input type="number" class="form-control form-control-sm qr-input mb-2" id="bitcoin-amount" placeholder="0.001" step="0.00000001" min="0">
@@ -255,9 +263,11 @@
                             <h6 id="geo-heading" class="visually-hidden">Geographic Location</h6>
                             <label for="geo-latitude" class="form-label small">Latitude</label>
                             <input type="number" class="form-control form-control-sm qr-input mb-2" id="geo-latitude" placeholder="40.7128" step="any">
+                            <div class="invalid-feedback"></div>
                             
                             <label for="geo-longitude" class="form-label small">Longitude</label>
                             <input type="number" class="form-control form-control-sm qr-input mb-2" id="geo-longitude" placeholder="-74.0060" step="any">
+                            <div class="invalid-feedback"></div>
                             
                             <label for="geo-altitude" class="form-label small">Altitude (meters)</label>
                             <input type="number" class="form-control form-control-sm qr-input mb-2" id="geo-altitude" placeholder="Optional" step="1">
@@ -282,6 +292,7 @@
                             
                             <label for="social-username" class="form-label small">Username or URL</label>
                             <input type="text" class="form-control form-control-sm qr-input mb-2" id="social-username" placeholder="username or full URL">
+                            <div class="invalid-feedback"></div>
                             
                             <div id="social-preview" class="form-text">Preview: <span id="social-preview-url"></span></div>
                         </div>
@@ -299,6 +310,7 @@
                             
                             <label for="app-id" class="form-label small">App ID or URL</label>
                             <input type="text" class="form-control form-control-sm qr-input mb-2" id="app-id" placeholder="App ID or full store URL">
+                            <div class="invalid-feedback"></div>
                             
                             <div id="app-preview" class="form-text">Preview: <span id="app-preview-url"></span></div>
                         </div>

@@ -494,6 +494,45 @@ function setupEventListeners() {
   $$('.qr-input').forEach(input => {
     input.addEventListener('input', debouncedGenerate);
     input.addEventListener('change', debouncedGenerate);
+    
+    // Add validation for email inputs
+    if (input.type === 'email') {
+      input.addEventListener('blur', () => {
+        if (input.value && !input.value.includes('@')) {
+          input.classList.add('is-invalid');
+          const feedback = input.parentNode.querySelector('.invalid-feedback');
+          if (feedback) feedback.textContent = 'Please enter a valid email address';
+        } else {
+          input.classList.remove('is-invalid');
+        }
+      });
+    }
+    
+    // Add validation for URL inputs
+    if (input.type === 'url') {
+      input.addEventListener('blur', () => {
+        if (input.value && !input.value.startsWith('http')) {
+          input.classList.add('is-invalid');
+          const feedback = input.parentNode.querySelector('.invalid-feedback');
+          if (feedback) feedback.textContent = 'Please enter a valid URL starting with http:// or https://';
+        } else {
+          input.classList.remove('is-invalid');
+        }
+      });
+    }
+    
+    // Add validation for phone inputs
+    if (input.type === 'tel') {
+      input.addEventListener('blur', () => {
+        if (input.value && !input.value.match(/^\+?[\d\s\-\(\)]+$/)) {
+          input.classList.add('is-invalid');
+          const feedback = input.parentNode.querySelector('.invalid-feedback');
+          if (feedback) feedback.textContent = 'Please enter a valid phone number';
+        } else {
+          input.classList.remove('is-invalid');
+        }
+      });
+    }
   });
 }
 
