@@ -211,7 +211,7 @@ function generate() {
   
   try {
     const content = getContent();
-    const size = parseInt($('qr-size')?.value || '400', 10);
+    const size = parseInt($('qr-size')?.value || '350', 10);
     const fg = $('fg-color')?.value || '#000000';
     const bg = $('bg-color')?.value || '#ffffff';
     const ec = $('error-correction')?.value || 'M';
@@ -653,8 +653,8 @@ function clearAllSettings() {
   }
   
   // Reset design settings
-  $('qr-size').value = '400';
-  $('size-display').textContent = '400';
+  $('qr-size').value = '350';
+  $('size-display').textContent = '350';
   $('margin-size').value = '2';
   $('margin-display').textContent = '2';
   $('fg-color').value = '#000000';
@@ -738,7 +738,7 @@ function updateCharCount() {
 
 // Update QR code dimensions display
 function updateQRDimensions() {
-  const size = parseInt($('qr-size')?.value || '400', 10);
+  const size = parseInt($('qr-size')?.value || '350', 10);
   const dimensionsContainer = $('qr-dimensions');
   const dimensionsValue = dimensionsContainer?.querySelectorAll('.qr-dimensions-value');
   
